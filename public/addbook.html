@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Bookshelf golang app</title>
+	<link rel="stylesheet" href="css/style.css">
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+
+<body id="home">
+
+	<h1>Test app</h1>
+
+	<h2>Add item</h2>
+
+	<div>
+		<form action="/book" method="POST">
+            <input type="text" name="name">
+            <input type="text" name="author">
+            <input type="text" name="picture" placeholder="TODO: Pic uploader">
+
+            <input type="submit" value="Save">
+        </form>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="js/index.js"></script>
+</body>
+</html>
