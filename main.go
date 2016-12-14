@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -9,14 +8,12 @@ import (
 func main() {
 	fs := http.FileServer(http.Dir("public"))
 	http.Handle("/", fs)
-	http.HandleFunc("/book", addBookHandler) // set router
+	// set routes
+	http.HandleFunc("/book", addBookHandler)
 	http.HandleFunc("/books", listBooksHandler)
-	//http.HandleFunc("/AddBook", addBookHandler)
-	//http.ListenAndServe(":8099", http.FileServer(http.Dir("public")))
-	err := http.ListenAndServe(":8099", nil)
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
-	}
+	http.HandleFunc("/login", loginHandler)
+	err := http.ListenAndServeTLS(":8099", "cert/localhost.pem", "cert/localhost.key", nil)
+	logErr(err)
 }
 
 func checkErr(err error) {
@@ -25,18 +22,10 @@ func checkErr(err error) {
 	}
 }
 
-func generateBooks(length int) []Book {
-	books := make([]Book, length, length)
-	for i := 0; i < length; i++ {
-		books[i] = Book{
-			ID:     i,
-			Name:   fmt.Sprint("name-", i),
-			Author: fmt.Sprint("author-", i),
-			Picurl: fmt.Sprint("pic-", i),
-		}
+func logErr(err error) {
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
 	}
-
-	return books
 }
 
 // Book type holds books info.
