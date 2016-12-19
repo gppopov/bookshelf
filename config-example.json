@@ -1,0 +1,6 @@
+{
+    "redis_addr": "Redis server ip address plus port. Example for local redis: 127.0.0.1:6379",
+    "server_private_key": "Path to private key. Example: cert/my_secret.key",
+    "server_public_key": "Path to ssl public key. Example: cert/my_public.pem",
+    "app_port": "Port for go http server to run on. WITH COLON. Example: :8099"
+}

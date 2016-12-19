@@ -22,10 +22,18 @@ func addBookHandler(w http.ResponseWriter, r *http.Request) {
 		// TODO: Return book info as json.
 	} else if r.Method == "POST" {
 		r.ParseForm()
-		fmt.Println(r.Form)
+		fmt.Println(r.Form) // TODO: Remove after debug.
+		book := new(Book)
 		for k, v := range r.Form {
-			fmt.Println("key:", k)
-			fmt.Println("val:", strings.Join(v, ""))
+			if k == "name" {
+				book.Name = strings.Join(v, "")
+			}
+			if k == "author" {
+				book.Author = strings.Join(v, "")
+			}
+			if k == "picture" {
+				book.Picurl = strings.Join(v, "")
+			}
 		}
 
 		// TOOD: Parse form and validate inputs.
@@ -50,6 +58,31 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			user.Password = strings.Join(v, "")
 		}
 	}
+
+	if !loginUser(user) {
+		// TODO: Return validation message.
+	}
+
+	// TODO: Create session for current user.
+	// TODO: Create user and persist info.
+}
+
+func registerHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		return
+	}
+
+	user := new(User)
+	r.ParseForm()
+	for k, v := range r.Form {
+		if k == "username" {
+			user.Username = strings.Join(v, "")
+		}
+		if k == "pass" {
+			user.Password = strings.Join(v, "")
+		}
+	}
+
 }
 
 //
@@ -69,7 +102,26 @@ func generateBooks(length int) []Book {
 	return books
 }
 
+// Validate password according to NIST standards
+// (https://pages.nist.gov/800-63-3/sp800-63b.html#memorized-secret-verifiers)
+func validatePass(user *User) bool {
+	// TODO: Check if user already exists.
+
+	// TODO: Validate password.
+	// 1.) - Min 8 char, max 64 chars;
+	// 2.) - Forbid space char.
+	// 3.) - Check against common passwords,
+	//		 dictionary words, derivatives of the username
+	return true
+}
+
+func loginUser(user *User) bool {
+	return true
+}
+
+// User holds system user's info.
 type User struct {
-	Password string
-	Username string
+	Username        string
+	Password        string
+	ConfirmPassword string
 }

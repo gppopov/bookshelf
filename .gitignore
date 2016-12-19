@@ -10,6 +10,9 @@ _test
 .vscode
 cert
 
+# Sensitive files
+config.json
+
 # Architecture specific extensions/prefixes
 *.[568vq]
 [568vq].out
